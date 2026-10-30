@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LR0R6HJNM6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LR0R6HJNM6');
+</script>
 <title>Nexus Seawoods Offers</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -384,6 +392,17 @@ CATS.forEach(c => c.brands.sort((a, b) => isLive(b) - isLive(a)));
 const countLabel = (c) => { const n = liveCount(c); return n ? `${n} ${n === 1 ? "offer" : "offers"} live` : "Offers coming soon"; };
 
 const $ = (id) => document.getElementById(id);
+
+/* Analytics: which QR placement brought the visitor (?qr=entrance), kept for the visit */
+const QR = (() => {
+  let q = null;
+  try { q = new URLSearchParams(location.search).get("qr"); } catch (e) {}
+  try { if (q) sessionStorage.setItem("qr", q); else q = sessionStorage.getItem("qr"); } catch (e) {}
+  return (q || "direct").toLowerCase().slice(0, 40);
+})();
+function track(name, params) {
+  try { if (typeof gtag === "function") gtag("event", name, Object.assign({ qr_location: QR }, params || {})); } catch (e) {}
+}
 const home = $("home"), catview = $("catview");
 let currentCat = null, filter = "All", lastFocus = null;
 
@@ -439,7 +458,6 @@ function showCategory(id) {
   if (!c) { showHome(); return; }
   closeSheet(true);
   currentCat = c; filter = "All";
-  document.documentElement.style.setProperty("--neon-cat", c.accent);
   catview.style.setProperty("--a", c.accent);
   $("sheet").style.setProperty("--a", c.accent);
   $("cat-title").textContent = c.name;
@@ -456,6 +474,7 @@ function showCategory(id) {
   } else { $("chips").hidden = true; $("chips").innerHTML = ""; }
   renderList();
   home.hidden = true; catview.hidden = false;
+  track("view_category", { category: c.name });
   window.scrollTo(0, 0);
   const active = $("pills").querySelector(".on");
   if (active) active.scrollIntoView({ inline: "center", block: "nearest" });
@@ -463,11 +482,12 @@ function showCategory(id) {
 function showHome() {
   closeSheet(true); currentCat = null;
   catview.hidden = true; home.hidden = false; window.scrollTo(0, 0);
+  track("view_home");
 }
 function route() { const h = location.hash.replace("#", ""); h ? showCategory(h) : showHome(); }
 window.addEventListener("hashchange", route);
 
-$("back").addEventListener("click", () => { history.pushState ? (location.hash = "") : null; showHome(); });
+$("back").addEventListener("click", () => { location.hash = ""; });
 $("chips").addEventListener("click", e => {
   const b = e.target.closest(".chip"); if (!b) return;
   filter = b.dataset.f;
@@ -481,6 +501,7 @@ $("list").addEventListener("click", e => {
   lastFocus = b; openSheet(currentCat.brands[+b.dataset.i]);
 });
 function openSheet(b) {
+  track("view_offer", { brand: b.n, category: currentCat.name, offer_status: isLive(b) ? "live" : "coming soon" });
   $("sheet-mono").textContent = initials(b.n);
   $("sheet-name").textContent = b.n;
   $("sheet-cat").textContent = currentCat.name + (b.t ? " · " + b.t : "");
