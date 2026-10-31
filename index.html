@@ -475,7 +475,19 @@ const initials = (n) => {
 const TODAY = new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10); /* date in IST */
 const isLive = (b) => !!b.o && (!b.o.end || b.o.end >= TODAY) && (!b.o.start || b.o.start <= TODAY);
 const liveCount = (c) => c.brands.filter(isLive).length;
-CATS.forEach(c => c.brands.sort((a, b) => isLive(b) - isLive(a)));
+/* Display order: biggest stores first (anchors, then large-format, then inline brands, then kiosks).
+   Brands not listed here go to the end of their category in the order they were added. */
+const SIZE_ORDER = {
+  fashion: ["Lifestyle", "Marks & Spencer", "Azorte", "Meena Bazaar", "Levi's", "Adidas", "U.S. Polo Assn.", "Jack & Jones", "ONLY", "Van Heusen Man", "Allen Solly", "Peter England", "Louis Philippe", "Raymond", "Lacoste", "American Eagle", "Forever New", "Biba", "Arrow", "Van Heusen Women", "Rare Rabbit", "ASICS", "MUFTI", "Spykar", "Flying Machine", "John Players", "ColorPlus", "Sabhyata", "Cover Story", "Latin Quarters", "Triumph", "Zivame", "Enamor", "Amukti", "Sweet Dreams"],
+  jewellery: ["Malabar Gold & Diamonds", "Titan World", "Fossil", "Just In Time", "Peora", "Estele"],
+  bags: ["Skechers", "ALDO", "House of Samsonite", "VIP", "Crocs", "Sunglass Hut", "Lavie", "Baggit", "Mokobara", "Safari", "Campus", "Neeman's", "Rosso Brunello", "Language", "Kompanero", "Esbeda", "Citywalk", "Uppercase", "IT Luggage", "GKB Opticals", "3rd Eye Optical", "MacV", "Socks Xpress"],
+  home: ["One Stop", "Miniso", "Bargain Book Hut", "Wonderchef", "Vaya", "ɛt'sɛtərə", "Shahenaz"],
+  kids: ["Hamleys", "Miniklub", "Tales & Stories"],
+  beauty: ["The Body Shop", "Parcos", "Skinn", "RAS", "Pilgrim", "Fitness Fuel 360"],
+  electronics: ["Reliance Digital", "Mi Home", "Oppo", "Poojara", "Unique Mobile Gallery", "Seawoods Telecom"],
+  food: ["The Irish House", "Copper Chimney", "Pizza Express", "Toscano"]
+};
+CATS.forEach(c => { const o = SIZE_ORDER[c.id] || []; const r = n => { const i = o.indexOf(n); return i < 0 ? 1e4 : i; }; c.brands.forEach((b, i) => b._i = i); c.brands.sort((a, b) => (r(a.n) - r(b.n)) || (a._i - b._i)); });
 const countLabel = (c) => { const n = liveCount(c); return n ? `${n} ${n === 1 ? "offer" : "offers"} live` : "Offers coming soon"; };
 
 /* Brand logos (from the Brand Logos folder, cropped for tiles). Brands without a usable file show their name. */
