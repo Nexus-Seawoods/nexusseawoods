@@ -496,7 +496,7 @@ const SIZE_ORDER = {
   electronics: ["Reliance Digital", "Mi Home", "Oppo", "Poojara", "Unique Mobile Gallery", "Seawoods Telecom"],
   food: ["The Irish House", "Copper Chimney", "Pizza Express", "Toscano"]
 };
-CATS.forEach(c => { const o = SIZE_ORDER[c.id] || []; const r = n => { const i = o.indexOf(n); return i < 0 ? 1e4 : i; }; c.brands.forEach((b, i) => b._i = i); c.brands.sort((a, b) => (r(a.n) - r(b.n)) || (a._i - b._i)); });
+CATS.forEach(c => { const o = SIZE_ORDER[c.id] || []; const r = n => { const i = o.indexOf(n); return i < 0 ? 1e4 : i; }; c.brands.forEach((b, i) => b._i = i); const tier = b => isLive(b) ? 0 : (b.o && b.o.start && b.o.start > TODAY && (!b.o.end || b.o.end >= TODAY)) ? 1 : 2; c.brands.sort((a, b) => (tier(a) - tier(b)) || (r(a.n) - r(b.n)) || (a._i - b._i)); });
 const countLabel = (c) => { const n = liveCount(c); return n ? `${n} ${n === 1 ? "offer" : "offers"} live` : "Offers coming soon"; };
 
 /* Brand logos (from the Brand Logos folder, cropped for tiles). Brands without a usable file show their name. */
