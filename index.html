@@ -609,7 +609,15 @@ function showHome() {
   track("view_home");
 }
 const ALIAS = { accessories: "bags" };
-function route() { let h = location.hash.replace("#", ""); h = ALIAS[h] || h; h ? showCategory(h) : showHome(); }
+const slug = n => n.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "");
+function route() {
+  let [h, bs] = location.hash.replace("#", "").split("/"); h = ALIAS[h] || h;
+  if (!h) return showHome();
+  showCategory(h);
+  /* deep link to one brand's offer, e.g. #fashion/triumph */
+  const b = bs && currentCat && currentCat.brands.find(x => slug(x.n) === slug(decodeURIComponent(bs)));
+  if (b) openSheet(b);
+}
 window.addEventListener("hashchange", route);
 
 $("back").addEventListener("click", () => { location.hash = ""; });
@@ -652,6 +660,7 @@ function openSheet(b) {
 function closeSheet(instant) {
   const s = $("sheet"), sc = $("scrim");
   if (s.hidden) return;
+  if (!instant && location.hash.includes("/") && currentCat) { try { history.replaceState(null, "", location.pathname + location.search + "#" + currentCat.id); } catch (e) {} }
   s.classList.remove("show"); sc.classList.remove("show");
   document.body.style.overflow = "";
   const done = () => { s.hidden = true; sc.hidden = true; };
