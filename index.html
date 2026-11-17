@@ -345,7 +345,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
 <script>
 /* ============ EDIT OFFERS HERE ============
-   Source: Retailer Offers master consolidation, 30 Oct 2026 (Forever New slabs updated per marketing).
+   Source: Monday Offers sheet, 16 Nov 2026 (earlier offers from the 30 Oct master kept where still valid).
    Brand:  { n: name, t: tag (Fashion only), o: offer or null }
    Offer:  { h: headline, d: detail, s: slabs [[spend, reward], ...], sh: slab column labels,
              v: validity as shown, end: "YYYY-MM-DD" (offer hides itself after this date), start: "YYYY-MM-DD" } */
@@ -353,41 +353,47 @@ const NOV = "2026-11-30";
 const CATS = [
   { id: "fashion", name: "Fashion", sub: "Men, women and unisex labels", accent: "#ff4fb8", icon: "hanger", filters: ["Men", "Women", "Unisex"],
     brands: [
-      { n: "John Players", t: "Men", o: { h: "₹1,500 off", d: "On shopping of ₹6,990.", v: "Till Diwali" } },
-      { n: "MUFTI", t: "Men", o: { h: "₹3,000 off", d: "On purchase worth ₹17,999.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "John Players", t: "Men", o: {"h": "₹1,500 off", "d": "On purchase of ₹5,990 and above.", "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "MUFTI", t: "Men", o: {"h": "Up to ₹3,000 off", "s": [["₹7,999", "₹1,000 off"], ["₹12,999", "₹2,000 off"], ["₹17,999", "₹3,000 off"]], "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "Van Heusen Man", t: "Men", o: { h: "Free trolley bag", d: "On shopping of ₹14,995.", v: "Till 1 Nov", end: "2026-11-01" } },
       { n: "Peter England", t: "Men", o: { h: "Belt & wallet combo worth ₹3,499", d: "On purchase of ₹6,999.", v: "Till 1 Nov", end: "2026-11-01" } },
       { n: "ColorPlus", t: "Men", o: { h: "Travel trolley at ₹999 + GST", d: "On qualifying spends of ₹9,999, ₹14,999 or ₹19,999. Ask at the store for the details of each slab.", v: "Ask at store" } },
       { n: "Meena Bazaar", t: "Women", o: { h: "Up to 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
       { n: "Forever New", t: "Women", o: { h: "Festive gifts with your shopping", s: [["₹10,000", "Free candle"], ["₹20,000", "Limited-edition scarf"], ["₹30,000", "Perfume"]], v: "Till 31 Dec", end: "2026-12-31" } },
-      { n: "Zivame", t: "Women", o: { h: "Buy 3, get 2", v: "Till Diwali" } },
+      { n: "Zivame", t: "Women", o: {"h": "Buy 4, get 3 free", "s": [["3", "2 free"], ["4", "3 free"]], "sh": ["Buy", "You get"], "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "Sabhyata", t: "Women", o: { h: "Flat 40% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Triumph", t: "Women", o: { h: "Buy 2, get 1 free", v: "Till 8 Nov", end: "2026-11-08" } },
+      { n: "Triumph", t: "Women", o: {"h": "Buy 2, get 2 free", "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "ONLY", t: "Women", o: { h: "₹1,000 off", d: "On purchase of ₹6,990.", v: "Till 14 Nov", end: "2026-11-14" } },
       { n: "Enamor", t: "Women", o: { h: "Up to ₹1,000 off", s: [["₹3,499", "₹500 off"], ["₹8,499", "₹1,000 off"]], v: "Till 10 Dec", end: "2026-12-10" } },
       { n: "Biba", t: "Women", o: { h: "Buy 2, get 1", d: "On ready-to-stitch.", v: "While stocks last" } },
       { n: "Latin Quarters", t: "Women", o: { h: "Up to ₹1,250 off", s: [["₹5,499", "₹500 off"], ["₹7,499", "₹750 off"], ["₹9,999", "₹1,250 off"]], v: "Ask at store" } },
       { n: "Azorte", t: "Unisex", o: { h: "₹1,000 off", d: "On shopping of ₹5,999.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Flying Machine", t: "Unisex", o: { h: "₹1,500 off", d: "On purchase of ₹9,999.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Flying Machine", t: "Unisex", o: {"h": "Flat 30% off", "d": "On selected styles.", "v": "Till 30 Nov", "end": "2026-11-30"} },
       { n: "U.S. Polo Assn.", t: "Unisex", o: { h: "Duffle bag worth ₹7,999 for ₹799", d: "On shopping of ₹12,999.", v: "Till 1 Nov", end: "2026-11-01" } },
       { n: "Lifestyle", t: "Unisex", o: { h: "Vouchers worth ₹10,000", d: "Style Miles: shop for ₹30,000 and receive vouchers worth ₹10,000.", v: "Till 11 Nov", end: "2026-11-11" } },
-      { n: "Sweet Dreams", t: "Unisex", o: { h: "Up to 20% off", s: [["₹3,500", "10% off"], ["₹6,000", "15% off"], ["₹10,000", "20% off"]], v: "Ask at store" } },
-      { n: "Spykar", t: "Unisex", o: { h: "₹1,000 off + trolley bag at ₹499", d: "On shopping of ₹17,990.", v: "Till 30 Nov", end: "2026-11-30" } },
-      { n: "Cover Story", t: "Women", o: { h: "Flat 40% off", d: "On purchase of 2 styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "American Eagle", t: "Unisex", o: { h: "₹5,000 off", d: "On shopping of ₹19,990.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Sweet Dreams", t: "Unisex", o: {"h": "Up to 20% off", "s": [["₹3,500", "10% off"], ["₹6,000", "15% off"], ["₹10,000", "20% off"]], "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Spykar", t: "Unisex", o: {"h": "Up to ₹3,000 off", "s": [["₹7,999", "₹1,000 off"], ["₹12,990", "₹2,000 off"], ["₹17,990", "₹3,000 off"]], "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Cover Story", t: "Women", o: {"h": "Flat 40% off", "d": "On selected styles.", "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "American Eagle", t: "Unisex", o: {"h": "Up to ₹4,000 off", "s": [["₹8,000", "₹1,000 off"], ["₹14,990", "₹2,500 off"], ["₹19,990", "₹4,000 off"]], "v": "Till 30 Nov", "end": "2026-11-30"} },
       { n: "Marks & Spencer", t: "Unisex", o: { h: "₹750 voucher", d: "On shopping of ₹4,999.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Levi's", t: "Unisex", o: { h: "Apparel worth ₹4,000 free", d: "On apparel purchase worth ₹17,999.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Jack & Jones", t: "Men", o: { h: "₹1,000 off", d: "On shopping of ₹6,990.", v: "Till 8 Nov", end: "2026-11-08" } },
+      { n: "Levi's", t: "Unisex", o: {"h": "Apparel worth ₹1,000 free", "d": "On apparel purchase worth ₹9,999.", "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "Jack & Jones", t: "Men", o: {"h": "Flat 30% off when you buy 2", "s": [["1", "Flat 20% off"], ["2", "Flat 30% off"]], "sh": ["Buy", "You get"], "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "Lacoste", t: "Unisex", o: { h: "Up to 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Rare Rabbit", t: "Men", o: { h: "Up to 30% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Adidas", t: "Unisex", o: { h: "Free duffle bag worth ₹4,999", d: "On purchase of ₹17,999.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Rare Rabbit", t: "Men", o: {"h": "Up to 30% off", "d": "On selected styles.", "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "Adidas", t: "Unisex", o: {"h": "Free duffle bag & backpack worth ₹7,998", "d": "On purchase of ₹24,999.", "v": "Till 30 Nov", "end": "2026-11-30"} },
       { n: "Van Heusen Women", t: "Women", o: { h: "Free handbag", d: "On shopping of ₹8,999.", v: "Till 1 Nov", end: "2026-11-01" } },
       { n: "Arrow", t: "Men", o: { h: "₹2,000 off", d: "On purchase of ₹12,995.", v: "Till 1 Nov", end: "2026-11-01" } },
       { n: "Allen Solly", t: "Unisex", o: { h: "Duffle bag worth ₹4,999 at ₹199", d: "On shopping of ₹8,999.", v: "Till 1 Nov", end: "2026-11-01" } },
       { n: "Raymond", t: "Men", o: { h: "Travel trolley at ₹999 + GST", d: "On shopping of ₹9,999.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Louis Philippe", t: "Men", o: { h: "Free premium trolley bag", d: "On purchase of ₹26,999.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "ASICS", t: "Unisex", o: { h: "₹4,000 off", d: "On shopping of ₹25,000.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Amukti", t: "Women", o: { h: "Flat 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } }
+      { n: "Louis Philippe", t: "Men", o: {"h": "Free premium trolley bag", "d": "On purchase of ₹26,999.", "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "ASICS", t: "Unisex", o: {"h": "Up to ₹4,000 off", "s": [["₹10,000", "₹1,000 off"], ["₹15,000", "₹2,000 off"], ["₹25,000", "₹4,000 off"]], "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Amukti", t: "Women", o: {"h": "Flat 50% off", "d": "On selected styles.", "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Being Human", t: "Unisex", o: {"h": "Up to ₹5,000 off", "s": [["₹7,000", "₹1,000 off"], ["₹12,000", "₹2,000 off"], ["₹25,000", "₹5,000 off"]], "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "Vero Moda", t: "Women", o: {"h": "Flat 30% off", "d": "On selected styles.", "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Selected", t: "Men", o: {"h": "Up to ₹4,000 off", "s": [["₹14,990", "₹2,500 off"], ["₹19,990", "₹4,000 off"]], "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Woodland", t: "Unisex", o: {"h": "Up to 40% off", "d": "On selected products.", "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "United Colors of Benetton", t: "Unisex", o: {"h": "Free laptop backpack or trolley bag", "s": [["₹11,999", "Laptop backpack"], ["₹18,999", "Trolley bag"]], "sh": ["Shop for", "You get free"], "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Aurelia", t: "Women", o: {"h": "₹2,000 off", "d": "On purchase of products worth ₹10,000.", "v": "Till 22 Nov", "end": "2026-11-22"} }
     ] },
   { id: "jewellery", name: "Jewellery & Watches", sub: "Gold, diamonds, fashion jewellery and watches", accent: "#f3c969", icon: "ring",
     brands: [
@@ -404,62 +410,68 @@ const CATS = [
       { n: "GIVA", o: {"h": "0% making charges", "p": ["0% making charges on gold and diamond jewellery.", "Up to 30% off on silver jewellery."], "v": "Till 8 Nov", "end": "2026-11-08"} },
       { n: "Palmonas", o: {"h": "Free solitaire earring on ₹30,000+", "s": [["Below ₹20,000", "Flat 20% off on overall value"], ["₹20,000 – ₹30,000", "Free 9kt gold pendant"], ["₹30,000 & above", "Solitaire diamond earring worth ₹30,000"]], "sh": ["Gold jewellery", "You get"], "p": ["Imitation jewellery: flat ₹999."], "v": "Till 8 Nov", "end": "2026-11-08"} },
       { n: "Malabar Gold & Diamonds", o: {"h": "Up to 30% off making charges", "p": ["Up to 30% off on making charges of all gold, uncut and gemstone jewellery.", "Up to 30% off on diamond value.", "Advance booking: pay 10% to book Dhanteras jewellery and get a free silver coin. Buy at the lower of the booked or prevailing rate.", "0% deduction on old gold exchange."], "v": "9 Oct to 15 Nov", "end": "2026-11-15", "start": "2026-10-09"} },
-      { n: "Peora", o: { h: "Up to 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Peora", o: {"h": "Up to 50% off", "v": "Till 30 Nov", "end": "2026-11-30"} },
       { n: "Fossil", o: { h: "30% off", d: "On selected watches.", v: "Till 5 Nov", end: "2026-11-05" } },
-      { n: "Just In Time", o: { h: "Up to 50% off", d: "On selected styles.", v: "Till 31 Oct", end: "2026-10-31" } },
+      { n: "Just In Time", o: {"h": "Up to 50% off", "d": "On selected watches.", "v": "Till 30 Nov", "end": "2026-11-30"} },
       { n: "Titan World", o: { h: "Up to 30% off", d: "On selected watches.", v: "Till 30 Oct", end: "2026-10-30" } },
-      { n: "Estele", o: { h: "Up to 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } }
+      { n: "Estele", o: {"h": "Up to 50% off", "d": "On selected pieces.", "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Swarovski", o: {"h": "Up to 30% off", "d": "Black Friday sale on select styles.", "v": "Till 30 Nov", "end": "2026-11-30"} }
     ] },
   { id: "bags", name: "Bags, Footwear & Accessories", sub: "Bags, luggage, footwear and eyewear", accent: "#4fe3d0", icon: "bag",
     brands: [
-      { n: "Kompanero", o: { h: "₹750 off", d: "On shopping of ₹4,999.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Kompanero", o: {"h": "Flat 30% off", "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "Language", o: { h: "Up to 50% off", v: "While stocks last" } },
-      { n: "ALDO", o: { h: "Buy 1, get 1", d: "On everything.", v: "Ask at store" } },
+      { n: "ALDO", o: {"h": "Flat 30% off", "d": "Plus an additional 10% off when you buy 2 (selected merchandise).", "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "VIP", o: { h: "Up to 50% off", v: "November 2026", end: NOV } },
-      { n: "MacV", o: { h: "Buy 2, get flat 20% off", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "MacV", o: {"h": "Buy 2, get flat 20% off", "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "House of Samsonite", o: { h: "20% off the second item", d: "When you buy 2.", v: "Till 6 Nov", end: "2026-11-06" } },
       { n: "3rd Eye Optical", o: { h: "25% off the second item", d: "Buy 1, get 25% off the second item.", v: "November 2026", end: NOV } },
       { n: "GKB Opticals", o: { h: "Up to 40% off the second pair", d: "Festive offer.", v: "Till 15 Nov", end: "2026-11-15" } },
       { n: "Socks Xpress", o: { h: "Up to 25% off", sh: ["Offer on", "You get"], s: [["Buy 2", "20% off"], ["Buy 3", "25% off"], ["Caps", "Flat ₹300 off"], ["Gift boxes", "25% off"]], d: "At the Socks Xpress kiosk.", v: "Till 31 Oct", end: "2026-10-31" } },
       { n: "Rosso Brunello", o: { h: "Up to 30% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Sunglass Hut", o: { h: "25% off the second pair", v: "Till 31 Oct", end: "2026-10-31" } },
-      { n: "Campus", o: { h: "Free Bellavita perfume", d: "On shopping of ₹2,499 or more.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Baggit", o: { h: "10% off", d: "On shopping of ₹3,990 or more.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Sunglass Hut", o: {"h": "Flat 25% off the second pair", "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Campus", o: {"h": "Free Bellavita perfume", "s": [["₹2,499", "Bellavita perfume"], ["₹4,499", "Bellavita perfume + gift"]], "sh": ["Shop for", "You get free"], "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "Baggit", o: {"h": "10% off", "d": "On shopping of ₹3,990 or more.", "v": "Till 30 Nov", "end": "2026-11-30"} },
       { n: "Citywalk", o: { h: "30% off", d: "On Citywalk shoes.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Esbeda", o: { h: "Flat 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Esbeda", o: {"h": "Flat 50% off", "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "Mokobara", o: { h: "Up to 60% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Uppercase", o: { h: "Up to 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Safari", o: { h: "Up to 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Uppercase", o: {"h": "Up to 50% off", "d": "On selected styles.", "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "Safari", o: {"h": "Up to 50% off", "d": "On selected styles.", "v": "Till 30 Nov", "end": "2026-11-30"} },
       { n: "IT Luggage", o: { h: "Up to 60% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Lavie", o: { h: "Up to 50% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Lavie", o: {"h": "Up to 50% off", "d": "On selected styles.", "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "Neeman's", o: { h: "Up to 60% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Skechers", o: { h: "₹2,000 off", d: "On shopping of ₹12,000 to ₹16,999.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Crocs", o: { h: "Up to 30% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } }
+      { n: "Skechers", o: {"h": "Up to ₹7,000 off", "s": [["₹12,000 – ₹16,999", "₹2,000 off"], ["₹17,000 – ₹24,999", "₹4,000 off"], ["₹25,000 & above", "₹7,000 off"]], "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Crocs", o: { h: "Up to 30% off", d: "On selected styles.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Wildcraft", o: {"h": "20% off when you buy 2", "d": "On selected styles.", "v": "Till 30 Nov", "end": "2026-11-30"} }
     ] },
   { id: "home", name: "Home, Gifts & Lifestyle", sub: "Home, kitchen, books and gifts", accent: "#a991ff", icon: "home",
     brands: [
       { n: "Miniso", o: { h: "Up to 50% off", v: "Till 31 Dec", end: "2026-12-31" } },
-      { n: "Wonderchef", o: { h: "Up to 50% off", d: "Plus a ₹500 gift voucher on purchase of ₹5,000 or more.", v: "November 2026", end: NOV } },
+      { n: "Wonderchef", o: {"h": "Up to 50% off", "d": "Plus a free ₹500 gift voucher on purchase of ₹5,000 or more.", "v": "Till 30 Nov", "end": "2026-11-30"} },
       { n: "ɛt'sɛtərə", o: { h: "Buy 1, get 1 free", v: "While stocks last" } },
       { n: "Shahenaz", o: { h: "Up to 50% off", d: "On selected items.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "One Stop", o: { h: "Up to 60% off", d: "On selected items.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Bargain Book Hut", o: { h: "Up to 80% off", d: "On selected books.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Vaya", o: { h: "Up to 50% off", d: "On selected items.", v: "Till 1 Nov", end: "2026-11-01" } }
+      { n: "One Stop", o: {"h": "Buy 2, get 1 free", "d": "On selected items.", "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "Bargain Book Hut", o: {"h": "Up to 80% off", "d": "On books.", "v": "Till 30 Nov", "end": "2026-11-30"} },
+      { n: "Vaya", o: {"h": "Up to 50% off", "d": "On selected products.", "v": "Till 22 Nov", "end": "2026-11-22"} }
     ] },
   { id: "kids", name: "Kids & Toys", sub: "Toys, kidswear and books", accent: "#ff9a3d", icon: "blocks",
     brands: [
       { n: "Hamleys", o: { h: "Up to 60% off", v: "November 2026", end: NOV } },
       { n: "Tales & Stories", o: { h: "Up to 60% off", d: "On selected products.", v: "November 2026", end: NOV } },
-      { n: "Miniklub", o: { h: "Gift voucher offer", d: "Ask at the store for the voucher value and terms.", v: "Till 13 Nov", end: "2026-11-13" } }
+      { n: "Miniklub", o: { h: "Gift voucher offer", d: "Ask at the store for the voucher value and terms.", v: "Till 13 Nov", end: "2026-11-13" } },
+      { n: "United Colors of Benetton Kids", o: {"h": "Free backpack or trolley", "s": [["₹7,999", "Backpack"], ["₹14,999", "Trolley"]], "sh": ["Shop for", "You get free"], "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Jack & Jones Junior", o: {"h": "Up to ₹4,000 off", "s": [["₹5,990", "₹1,000 off"], ["₹10,990", "₹2,000 off"], ["₹16,990", "₹4,000 off"]], "v": "Till 22 Nov", "end": "2026-11-22"} }
     ] },
   { id: "beauty", name: "Beauty & Wellness", sub: "Skincare, fragrance and fitness", accent: "#ff7d8f", icon: "drop",
     brands: [
-      { n: "Pilgrim", o: { h: "Buy 2, get 1 free", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Pilgrim", o: {"h": "Buy 2, get 1 free", "d": "On selected products.", "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "Fitness Fuel 360", o: { h: "Up to 50% off", d: "FF360 Mega Offer.", v: "30 Oct to 20 Nov", start: "2026-10-30", end: "2026-11-20" } },
-      { n: "RAS", o: { h: "Buy 2, get 1", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "RAS", o: {"h": "Buy 2, get 1 free", "v": "Till 22 Nov", "end": "2026-11-22"} },
       { n: "The Body Shop", o: { h: "Buy 1, get 1 free", d: "Butter Up Your Skin offer.", v: "Till 31 Oct", end: "2026-10-31" } },
       { n: "Parcos", o: { h: "Up to 40% off", d: "On selected products.", v: "Till 1 Nov", end: "2026-11-01" } },
-      { n: "Skinn", o: { h: "Up to 20% off", d: "On selected fragrances.", v: "Till 1 Nov", end: "2026-11-01" } }
+      { n: "Skinn", o: { h: "Up to 20% off", d: "On selected fragrances.", v: "Till 1 Nov", end: "2026-11-01" } },
+      { n: "Colorbar", o: {"h": "Free gift with every purchase", "d": "On purchases starting at ₹1,600.", "v": "Till 22 Nov", "end": "2026-11-22"} },
+      { n: "Mamaearth", o: {"h": "Any 3 for ₹999", "d": "On selected products.", "v": "Till 22 Nov", "end": "2026-11-22"} }
     ] },
   { id: "electronics", name: "Electronics", sub: "Phones, TVs and gadgets", accent: "#6aa8ff", icon: "plug",
     brands: [
@@ -507,12 +519,12 @@ const liveCount = (c) => c.brands.filter(isLive).length;
 /* Display order: biggest stores first (anchors, then large-format, then inline brands, then kiosks).
    Brands not listed here go to the end of their category in the order they were added. */
 const SIZE_ORDER = {
-  fashion: ["Lifestyle", "Marks & Spencer", "Azorte", "Meena Bazaar", "Levi's", "Adidas", "U.S. Polo Assn.", "Jack & Jones", "ONLY", "Van Heusen Man", "Allen Solly", "Peter England", "Louis Philippe", "Raymond", "Lacoste", "American Eagle", "Forever New", "Biba", "Arrow", "Van Heusen Women", "Rare Rabbit", "ASICS", "MUFTI", "Spykar", "Flying Machine", "John Players", "ColorPlus", "Sabhyata", "Cover Story", "Latin Quarters", "Triumph", "Zivame", "Enamor", "Amukti", "Sweet Dreams"],
-  jewellery: ["Tanishq", "Malabar Gold & Diamonds", "Kalyan Jewellers", "Reliance Jewels", "Indriya", "CaratLane", "ORRA", "Titan World", "Mia by Tanishq", "BlueStone", "Firefly", "Melorra", "Fossil", "Just In Time", "GIVA", "Palmonas", "Peora", "Estele"],
-  bags: ["Skechers", "ALDO", "House of Samsonite", "VIP", "Crocs", "Sunglass Hut", "Lavie", "Baggit", "Mokobara", "Safari", "Campus", "Neeman's", "Rosso Brunello", "Language", "Kompanero", "Esbeda", "Citywalk", "Uppercase", "IT Luggage", "GKB Opticals", "3rd Eye Optical", "MacV", "Socks Xpress"],
+  fashion: ["Lifestyle", "Marks & Spencer", "Azorte", "Meena Bazaar", "Levi's", "United Colors of Benetton", "Being Human", "Vero Moda", "Selected", "Adidas", "U.S. Polo Assn.", "Jack & Jones", "ONLY", "Van Heusen Man", "Allen Solly", "Peter England", "Louis Philippe", "Raymond", "Lacoste", "American Eagle", "Forever New", "Biba", "Arrow", "Van Heusen Women", "Rare Rabbit", "ASICS", "MUFTI", "Spykar", "Woodland", "Flying Machine", "John Players", "ColorPlus", "Sabhyata", "Cover Story", "Latin Quarters", "Triumph", "Zivame", "Enamor", "Amukti", "Aurelia", "Sweet Dreams"],
+  jewellery: ["Tanishq", "Malabar Gold & Diamonds", "Kalyan Jewellers", "Reliance Jewels", "Indriya", "CaratLane", "ORRA", "Titan World", "Mia by Tanishq", "BlueStone", "Firefly", "Melorra", "Fossil", "Swarovski", "Just In Time", "GIVA", "Palmonas", "Peora", "Estele"],
+  bags: ["Skechers", "ALDO", "House of Samsonite", "VIP", "Crocs", "Sunglass Hut", "Lavie", "Baggit", "Wildcraft", "Mokobara", "Safari", "Campus", "Neeman's", "Rosso Brunello", "Language", "Kompanero", "Esbeda", "Citywalk", "Uppercase", "IT Luggage", "GKB Opticals", "3rd Eye Optical", "MacV", "Socks Xpress"],
   home: ["One Stop", "Miniso", "Bargain Book Hut", "Wonderchef", "Vaya", "ɛt'sɛtərə", "Shahenaz"],
-  kids: ["Hamleys", "Miniklub", "Tales & Stories"],
-  beauty: ["The Body Shop", "Parcos", "Skinn", "RAS", "Pilgrim", "Fitness Fuel 360"],
+  kids: ["Hamleys", "Miniklub", "United Colors of Benetton Kids", "Jack & Jones Junior", "Tales & Stories"],
+  beauty: ["The Body Shop", "Parcos", "Mamaearth", "Colorbar", "Skinn", "RAS", "Pilgrim", "Fitness Fuel 360"],
   electronics: ["Reliance Digital", "iPlanet", "Samsung", "Mi Home", "Vivo", "Oppo", "Poojara", "Unique Mobile Gallery", "Seawoods Telecom"],
   food: ["The Irish House", "Copper Chimney", "Pizza Express", "Toscano"]
 };
